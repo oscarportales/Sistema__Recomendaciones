@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>🛒 Sistema de Recomendaciones Inteligente</title>
+    <title>🛒 Sistema de Recomendaciones.</title>
 
     <!-- Google Fonts: Poppins y Open Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -124,37 +124,31 @@
         /* Guía de puntuaciones */
         .table-light th, .table-light td {
             background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #dee2e6;
         }
 
-        /* Footer */
-        footer {
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            font-size: 0.9rem;
-            margin-top: 30px;
-        }
-
-        /* Animación de entrada */
-        .fade-in {
-            animation: fadeIn 0.8s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Mejora de la tabla */
-        .table-bordered td {
-            background-color: #f8f9fa; /* Fondo claro para mejor visibilidad */
-            color: #333; /* Letras oscuras */
+        /* Mejora específica para la tabla de puntuaciones */
+        #tablaPuntuaciones {
+            background-color: #fff; /* Fondo blanco claro */
             border: 1px solid #dee2e6; /* Borde suave */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
         }
 
-        .table-bordered input.form-control {
-            background-color: transparent; /* Transparente para mantener consistencia */
-            border: none; /* Sin borde adicional */
-            box-shadow: none; /* Sin sombra */
+        #tablaPuntuaciones th, #tablaPuntuaciones td {
+            padding: 8px; /* Espacio interno */
+            text-align: center; /* Centrado de texto */
+            border: 1px solid #dee2e6; /* Borde entre celdas */
+        }
+
+        #tablaPuntuaciones th {
+            background-color: #e9ecef; /* Fondo ligeramente más oscuro para cabeceras */
+            font-weight: bold; /* Fuente en negrita */
+        }
+
+        #tablaPuntuaciones td {
+            background-color: #fff; /* Fondo blanco para celdas */
         }
 
         /* Enunciado del proyecto */
@@ -175,7 +169,7 @@
             <div class="main-container fade-in">
                 <div class="text-center mb-4">
                     <i class="fas fa-magic fa-2x text-success mb-2"></i>
-                    <h2>🛒 Sistema de Recomendaciones Inteligente</h2>
+                    <h2>Sistema de Recomendaciones.</h2>
                     <p class="text-muted">Basado en similitud de coseno — Recomendaciones para ambos usuarios</p>
                 </div>
 
@@ -195,7 +189,7 @@
                 <div class="mb-4">
                     <h5><i class="fas fa-info-circle"></i> 📊 Guía de Puntuaciones</h5>
                     <div class="table-responsive">
-                        <table class="table table-bordered text-center">
+                        <table id="tablaPuntuaciones" class="table table-bordered text-center">
                             <thead class="table-light">
                                 <tr>
                                     <th>Puntuación</th>
@@ -240,7 +234,7 @@
 
             <!-- Footer -->
             <footer class="text-center mt-5">
-                &copy; <span id="year"></span> - Sistema de Recomendaciones con IA básica y diseño moderno
+                &copy; <span id="year"></span> - Sistema de Recomendaciones con diseño moderno
             </footer>
         </div>
     </div>
