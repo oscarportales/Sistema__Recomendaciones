@@ -1,91 +1,3 @@
-<?php
-/**
- * Sistema de Recomendaciones para 2 usuarios
- * - Recomendaciones bidireccionales
- * - Similitud de coseno
- */
-
-function similitudCoseno($vec1, $vec2) {
-    $productoEscalar = $magnitud1 = $magnitud2 = 0;
-    for ($i = 0; $i < count($vec1); $i++) {
-        $productoEscalar += $vec1[$i] * $vec2[$i];
-        $magnitud1 += pow($vec1[$i], 2);
-        $magnitud2 += pow($vec2[$i], 2);
-    }
-    $magnitud1 = sqrt($magnitud1);
-    $magnitud2 = sqrt($magnitud2);
-    return ($magnitud1 == 0 || $magnitud2 == 0) ? 0 : $productoEscalar / ($magnitud1 * $magnitud2);
-}
-
-$productos = ["Camiseta", "Pantalón", "Zapatos", "Gorra", "Reloj"];
-
-// Inicializar
-$usuario1 = [0, 0, 0, 0, 0];
-$usuario2 = [0, 0, 0, 0, 0];
-$resultado = "";
-$rec_usuario1 = [];
-$rec_usuario2 = [];
-$error = "";
-$mostrarResultados = false;
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $raw1 = $_POST['usuario1'] ?? [];
-    $raw2 = $_POST['usuario2'] ?? [];
-
-    if (count($raw1) !== 5 || count($raw2) !== 5) {
-        $error = "Debe completar las 5 puntuaciones.";
-    } else {
-        $usuario1 = array_map('intval', $raw1);
-        $usuario2 = array_map('intval', $raw2);
-
-        $valido = true;
-        foreach (array_merge($usuario1, $usuario2) as $p) {
-            if ($p < 0 || $p > 5) {
-                $valido = false;
-                break;
-            }
-        }
-
-        if (!$valido) {
-            $error = "Las puntuaciones deben estar entre 0 y 5.";
-        } else {
-            // Calcular similitud
-            $similitud = similitudCoseno($usuario1, $usuario2);
-            $porcentaje = round($similitud * 100, 2);
-            $resultado = "Similitud entre usuarios: <strong>{$porcentaje}%</strong>";
-
-            // === Recomendaciones para Usuario 1 ===
-            // Lo que Usuario 2 ama (≥4) y Usuario 1 no (≤2)
-            $rec_usuario1 = [];
-            foreach ($productos as $i => $producto) {
-                if ($usuario1[$i] <= 2 && $usuario2[$i] >= 4) {
-                    $rec_usuario1[] = [
-                        'producto' => $producto,
-                        'puntuacion' => $usuario2[$i],
-                        'motivo' => "Usuario 2 lo valora en {$usuario2[$i]}/5"
-                    ];
-                }
-            }
-
-            // === Recomendaciones para Usuario 2 ===
-            // Lo que Usuario 1 ama (≥4) y Usuario 2 no (≤2)
-            $rec_usuario2 = [];
-            foreach ($productos as $i => $producto) {
-                if ($usuario2[$i] <= 2 && $usuario1[$i] >= 4) {
-                    $rec_usuario2[] = [
-                        'producto' => $producto,
-                        'puntuacion' => $usuario1[$i],
-                        'motivo' => "Usuario 1 lo valora en {$usuario1[$i]}/5"
-                    ];
-                }
-            }
-
-            $mostrarResultados = true;
-        }
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -119,95 +31,142 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="card-body">
                     <p class="text-center text-muted">Ingresa las puntuaciones (0 a 5) para cada producto:</p>
 
-                    <form method="post">
-                        <table class="table table-bordered text-center">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Usuario 1</th>
-                                    <th>Usuario 2</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($productos as $i => $producto): ?>
-                                <tr>
-                                    <td class="text-start"><?= htmlspecialchars($producto) ?></td>
-                                    <td>
-                                        <input type="number" name="usuario1[]" class="form-control" min="0" max="5" required value="<?= $usuario1[$i] ?>">
-                                    </td>
-                                    <td>
-                                        <input type="number" name="usuario2[]" class="form-control" min="0" max="5" required value="<?= $usuario2[$i] ?>">
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                    <table class="table table-bordered text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Producto</th>
+                                <th>Usuario 1</th>
+                                <th>Usuario 2</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaProductos"></tbody>
+                    </table>
 
-                        <div class="text-center mt-3">
-                            <button type="submit" class="btn btn-primary btn-lg px-5">
-                                🔍 Calcular y Recomendar (Ambos)
-                            </button>
-                        </div>
-                    </form>
+                    <div class="text-center mt-3">
+                        <button id="btnCalcular" class="btn btn-primary btn-lg px-5">
+                            🔍 Calcular y Recomendar (Ambos)
+                        </button>
+                    </div>
 
-                    <?php if ($error): ?>
-                        <div class="alert alert-danger mt-4 text-center">
-                            ⚠️ <?= $error ?>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if ($mostrarResultados): ?>
-                        <!-- Similitud -->
-                        <div class="alert alert-info mt-4 text-center">
-                            <?= $resultado ?>
-                        </div>
-
-                        <!-- Recomendaciones para Usuario 1 -->
-                        <div class="mt-4">
-                            <h5 class="text-primary">👤 Recomendaciones para <strong>Usuario 1</strong></h5>
-                            <?php if (empty($rec_usuario1)): ?>
-                                <div class="alert alert-light">No se encontraron productos recomendables para Usuario 1.</div>
-                            <?php else: ?>
-                                <div class="border rounded p-3 bg-light">
-                                    <?php foreach ($rec_usuario1 as $r): ?>
-                                        <div class="recomendacion-item">
-                                            <strong><?= htmlspecialchars($r['producto']) ?></strong> 
-                                            <span class="badge bg-success float-end"><?= $r['puntuacion'] ?>/5</span>
-                                            <br>
-                                            <small class="text-muted"><?= $r['motivo'] ?></small>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-
-                        <!-- Recomendaciones para Usuario 2 -->
-                        <div class="mt-4">
-                            <h5 class="text-secondary">👤 Recomendaciones para <strong>Usuario 2</strong></h5>
-                            <?php if (empty($rec_usuario2)): ?>
-                                <div class="alert alert-light">No se encontraron productos recomendables para Usuario 2.</div>
-                            <?php else: ?>
-                                <div class="border rounded p-3 bg-light">
-                                    <?php foreach ($rec_usuario2 as $r): ?>
-                                        <div class="recomendacion-item">
-                                            <strong><?= htmlspecialchars($r['producto']) ?></strong> 
-                                            <span class="badge bg-secondary float-end"><?= $r['puntuacion'] ?>/5</span>
-                                            <br>
-                                            <small class="text-muted"><?= $r['motivo'] ?></small>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    <?php endif; ?>
+                    <div id="resultado" class="mt-4"></div>
                 </div>
             </div>
 
             <footer class="text-center mt-4 text-secondary">
-                &copy; <?= date('Y') ?> - Sistema de recomendaciones bidireccionales con similitud de coseno
+                &copy; <span id="year"></span> - Sistema de recomendaciones bidireccionales con similitud de coseno
             </footer>
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// Lista de productos
+const productos = ["Camiseta", "Pantalón", "Zapatos", "Gorra", "Reloj"];
+
+// Generar tabla
+const tabla = document.getElementById("tablaProductos");
+productos.forEach((producto, i) => {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `
+        <td class="text-start">${producto}</td>
+        <td><input type="number" class="form-control usuario1" min="0" max="5" value="0"></td>
+        <td><input type="number" class="form-control usuario2" min="0" max="5" value="0"></td>
+    `;
+    tabla.appendChild(fila);
+});
+
+// Función similitud coseno
+function similitudCoseno(vec1, vec2) {
+    let productoEscalar = 0, magnitud1 = 0, magnitud2 = 0;
+    for (let i = 0; i < vec1.length; i++) {
+        productoEscalar += vec1[i] * vec2[i];
+        magnitud1 += vec1[i] ** 2;
+        magnitud2 += vec2[i] ** 2;
+    }
+    magnitud1 = Math.sqrt(magnitud1);
+    magnitud2 = Math.sqrt(magnitud2);
+    return (magnitud1 === 0 || magnitud2 === 0) ? 0 : productoEscalar / (magnitud1 * magnitud2);
+}
+
+// Botón calcular
+document.getElementById("btnCalcular").addEventListener("click", () => {
+    const usuario1 = Array.from(document.querySelectorAll(".usuario1")).map(i => parseInt(i.value) || 0);
+    const usuario2 = Array.from(document.querySelectorAll(".usuario2")).map(i => parseInt(i.value) || 0);
+
+    // Validación
+    if (usuario1.length !== 5 || usuario2.length !== 5) {
+        alert("Debes ingresar todas las puntuaciones.");
+        return;
+    }
+    if ([...usuario1, ...usuario2].some(p => p < 0 || p > 5)) {
+        alert("Las puntuaciones deben estar entre 0 y 5.");
+        return;
+    }
+
+    // Calcular similitud
+    const sim = similitudCoseno(usuario1, usuario2);
+    const porcentaje = (sim * 100).toFixed(2);
+
+    let html = `
+        <div class="alert alert-info text-center">
+            Similitud entre usuarios: <strong>${porcentaje}%</strong>
+        </div>
+    `;
+
+    // Recomendaciones para Usuario 1
+    let rec1 = productos
+        .map((producto, i) => usuario1[i] <= 2 && usuario2[i] >= 4 ? {
+            producto,
+            puntuacion: usuario2[i],
+            motivo: `Usuario 2 lo valora en ${usuario2[i]}/5`
+        } : null)
+        .filter(x => x);
+
+    html += `<div class="mt-4"><h5 class="text-primary">👤 Recomendaciones para <strong>Usuario 1</strong></h5>`;
+    if (rec1.length === 0) {
+        html += `<div class="alert alert-light">No se encontraron productos recomendables para Usuario 1.</div>`;
+    } else {
+        html += `<div class="border rounded p-3 bg-light">`;
+        rec1.forEach(r => {
+            html += `<div class="recomendacion-item">
+                        <strong>${r.producto}</strong> 
+                        <span class="badge bg-success float-end">${r.puntuacion}/5</span><br>
+                        <small class="text-muted">${r.motivo}</small>
+                     </div>`;
+        });
+        html += `</div>`;
+    }
+    html += `</div>`;
+
+    // Recomendaciones para Usuario 2
+    let rec2 = productos
+        .map((producto, i) => usuario2[i] <= 2 && usuario1[i] >= 4 ? {
+            producto,
+            puntuacion: usuario1[i],
+            motivo: `Usuario 1 lo valora en ${usuario1[i]}/5`
+        } : null)
+        .filter(x => x);
+
+    html += `<div class="mt-4"><h5 class="text-secondary">👤 Recomendaciones para <strong>Usuario 2</strong></h5>`;
+    if (rec2.length === 0) {
+        html += `<div class="alert alert-light">No se encontraron productos recomendables para Usuario 2.</div>`;
+    } else {
+        html += `<div class="border rounded p-3 bg-light">`;
+        rec2.forEach(r => {
+            html += `<div class="recomendacion-item">
+                        <strong>${r.producto}</strong> 
+                        <span class="badge bg-secondary float-end">${r.puntuacion}/5</span><br>
+                        <small class="text-muted">${r.motivo}</small>
+                     </div>`;
+        });
+        html += `</div>`;
+    }
+    html += `</div>`;
+
+    document.getElementById("resultado").innerHTML = html;
+});
+</script>
 </body>
 </html>
