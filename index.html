@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>🛒 Sistema de Recomendaciones.</title>
+    <title>Recomendaciones de Apps Móviles</title>
 
     <!-- Google Fonts: Poppins y Open Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -14,10 +14,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        /* Fondo de imagen elegante */
+        /* Fondo tecnológico moderno */
         body {
-            background-image: url('https://media.discordapp.net/attachments/754171158609395832/1404266666292150413/2149367144.jpg?ex=689a90bf&is=68993f3f&hm=b3356bb895550e11436d582df7db1ba2caf8b7abc17f03e2c9d57b91f19ca8c2&=&format=webp&width=744&height=496');
-            background-size: cover;
+            background-image: url('https://media.discordapp.net/attachments/754171158609395832/1404275642777731182/2150169863.jpg?ex=689a991b&is=6899479b&hm=65e5fb490b121b06ef24760642f1893527a2536f5750598abdc0aa8a07022b75&=&format=webp&width=600&height=600');            background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
@@ -36,14 +35,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
+            background: rgba(0, 0, 0, 0.6);
             z-index: -1;
         }
 
         /* Contenedor principal con fondo translúcido */
         .main-container {
             backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.92);
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             padding: 30px;
@@ -54,49 +53,49 @@
         h2 {
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
-            color: #1a3a5f;
+            color: #0d47a1;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
         h5 {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            color: #2c5282;
+            color: #1565c0;
         }
 
         /* Botón principal */
         .btn-primary {
-            background: linear-gradient(135deg, #28a745, #218838);
+            background: linear-gradient(135deg, #0d47a1, #1976d2);
             border: none;
             padding: 12px 30px;
             font-size: 1.1rem;
             font-weight: 600;
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            box-shadow: 0 4px 15px rgba(13, 71, 161, 0.3);
             transition: all 0.3s ease;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 6px 20px rgba(13, 71, 161, 0.4);
         }
 
         /* Inputs */
         .form-control {
             border-radius: 8px;
-            border: 1px solid #ced4da;
+            border: 1px solid #90caf9;
             text-align: center;
             font-weight: 500;
         }
 
         .form-control:focus {
-            border-color: #28a745;
-            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+            border-color: #0d47a1;
+            box-shadow: 0 0 0 0.2rem rgba(13, 71, 161, 0.25);
         }
 
-        /* Tabla */
+        /* Tabla de productos */
         .table th {
-            background-color: #1a3a5f;
+            background-color: #0d47a1;
             color: white;
             font-weight: 600;
         }
@@ -107,8 +106,8 @@
 
         /* Recomendaciones */
         .recomendacion-item {
-            background: #f0f9f0;
-            border-left: 5px solid #28a745;
+            background: #e3f2fd;
+            border-left: 5px solid #0d47a1;
             padding: 12px 16px;
             margin-bottom: 10px;
             border-radius: 0 8px 8px 0;
@@ -128,36 +127,39 @@
             border: 1px solid #dee2e6;
         }
 
-        /* Mejora específica para la tabla de puntuaciones */
-        #tablaPuntuaciones {
-            background-color: #fff; /* Fondo blanco claro */
-            border: 1px solid #dee2e6; /* Borde suave */
-            border-radius: 8px; /* Bordes redondeados */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-        }
-
+        /* Mejora específica para la tabla */
         #tablaPuntuaciones th, #tablaPuntuaciones td {
-            padding: 8px; /* Espacio interno */
-            text-align: center; /* Centrado de texto */
-            border: 1px solid #dee2e6; /* Borde entre celdas */
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #dee2e6;
         }
 
         #tablaPuntuaciones th {
-            background-color: #e9ecef; /* Fondo ligeramente más oscuro para cabeceras */
-            font-weight: bold; /* Fuente en negrita */
+            background-color: #bbdefb;
+            font-weight: bold;
         }
 
         #tablaPuntuaciones td {
-            background-color: #fff; /* Fondo blanco para celdas */
+            background-color: #ffffff;
         }
 
         /* Enunciado del proyecto */
         .project-enunciation {
             margin-bottom: 20px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Animación */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -168,18 +170,18 @@
         <div class="col-lg-10 col-xl-9">
             <div class="main-container fade-in">
                 <div class="text-center mb-4">
-                    <i class="fas fa-magic fa-2x text-success mb-2"></i>
-                    <h2>Sistema de Recomendaciones.</h2>
-                    <p class="text-muted">Basado en similitud de coseno — Recomendaciones para ambos usuarios</p>
+                    <i class="fas fa-mobile-alt fa-2x text-primary mb-2"></i>
+                    <h2>📱 Sistema de Recomendaciones: Apps Móviles</h2>
+                    <p class="text-muted">Descubre nuevas aplicaciones basadas en tus gustos y los de otros usuarios</p>
                 </div>
 
                 <!-- Enunciado del proyecto -->
                 <div class="project-enunciation">
-                    <h5><i class="fas fa-book-open"></i> Enunciado del Proyecto</h5>
-                    <p><strong>Objetivo:</strong> Aplicar el concepto de producto escalar para medir similitud entre usuarios o productos.</p>
+                    <h5><i class="fas fa-book-open"></i> 📄 Enunciado del Proyecto</h5>
+                    <p><strong>Objetivo:</strong> Aplicar el concepto de producto escalar para medir similitud entre usuarios.</p>
                     <ol>
-                        <li>Definir vectores de preferencias (por ejemplo: usuario-producto).</li>
-                        <li>Calcular la similitud de coseno entre dos vectores.</li>
+                        <li>Definir vectores de preferencias (usuario - productos).</li>
+                        <li>Calcular la similitud de coseno entre dos usuarios.</li>
                         <li>Mostrar el resultado como porcentaje de similitud.</li>
                         <li>Simular un sistema de recomendaciones.</li>
                     </ol>
@@ -187,7 +189,7 @@
 
                 <!-- Guía de puntuaciones -->
                 <div class="mb-4">
-                    <h5><i class="fas fa-info-circle"></i> 📊 Guía de Puntuaciones</h5>
+                    <h5><i class="fas fa-info-circle"></i> 📊 Tu nivel de uso o preferencia</h5>
                     <div class="table-responsive">
                         <table id="tablaPuntuaciones" class="table table-bordered text-center">
                             <thead class="table-light">
@@ -197,22 +199,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td>0</td><td>No me gusta / No lo usaría</td></tr>
-                                <tr><td>1-2</td><td>Bajo interés</td></tr>
-                                <tr><td>3</td><td>Interés moderado</td></tr>
+                                <tr><td>0</td><td>No uso / No me interesa</td></tr>
+                                <tr><td>1-2</td><td>Uso ocasional / Poco interés</td></tr>
+                                <tr><td>3</td><td>Uso regular</td></tr>
                                 <tr><td>4</td><td>Me gusta mucho</td></tr>
-                                <tr><td>5</td><td>¡Me encanta! / Totalmente recomendado</td></tr>
+                                <tr><td>5</td><td>Esencial / Uso diario</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- Tabla de productos -->
+                <!-- Tabla de apps -->
                 <div class="table-responsive">
                     <table class="table table-bordered align-middle">
                         <thead class="table-dark">
                             <tr>
-                                <th>Producto</th>
+                                <th>App Móvil</th>
                                 <th class="text-center">👤 Usuario 1</th>
                                 <th class="text-center">👤 Usuario 2</th>
                             </tr>
@@ -233,26 +235,37 @@
             </div>
 
             <!-- Footer -->
-            <footer class="text-center mt-5">
-                &copy; <span id="year"></span> - Sistema de Recomendaciones con diseño moderno
+            <footer class="text-center mt-5 text-white">
+                &copy; <span id="year"></span> - Sistema de Recomendaciones de Apps Móviles con Similitud de Coseno
             </footer>
         </div>
     </div>
 </div>
 
 <script>
-    // Año actual en el footer
+    // Año actual
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Productos
-    const productos = ["Camiseta", "Pantalón", "Zapatos", "Gorra", "Reloj"];
+    // 10 apps móviles populares
+    const productos = [
+        "WhatsApp",
+        "Instagram",
+        "TikTok",
+        "Telegram",
+        "Spotify",
+        "Uber",
+        "Google Maps",
+        "Snapchat",
+        "X (Twitter)",
+        "YouTube"
+    ];
 
-    // Generar filas de la tabla
+    // Generar tabla
     const tabla = document.getElementById("tablaProductos");
-    productos.forEach((producto, i) => {
+    productos.forEach((app, i) => {
         const fila = document.createElement("tr");
         fila.innerHTML = `
-            <td class="fw-bold text-start">${producto}</td>
+            <td class="fw-bold text-start">${app}</td>
             <td class="text-center"><input type="number" class="form-control usuario1" min="0" max="5" value="0"></td>
             <td class="text-center"><input type="number" class="form-control usuario2" min="0" max="5" value="0"></td>
         `;
@@ -272,7 +285,7 @@
         return (magnitud1 === 0 || magnitud2 === 0) ? 0 : productoEscalar / (magnitud1 * magnitud2);
     }
 
-    // Evento del botón
+    // Botón calcular
     document.getElementById("btnCalcular").addEventListener("click", () => {
         const usuario1 = Array.from(document.querySelectorAll(".usuario1")).map(i => parseInt(i.value) || 0);
         const usuario2 = Array.from(document.querySelectorAll(".usuario2")).map(i => parseInt(i.value) || 0);
@@ -288,29 +301,29 @@
         const porcentaje = (sim * 100).toFixed(2);
 
         let html = `
-            <div class="alert alert-success text-center fade-in" style="font-size: 1.1rem;">
+            <div class="alert alert-info text-center fade-in" style="font-size: 1.1rem;">
                 <i class="fas fa-sync-alt fa-spin me-2"></i>
-                <strong>Similitud calculada:</strong> ${porcentaje}%
+                <strong>Similitud de intereses:</strong> ${porcentaje}%
             </div>
         `;
 
         // Recomendaciones para Usuario 1
         const rec1 = productos
-            .map((producto, i) => (usuario1[i] <= 2 && usuario2[i] >= 4) ? {
-                producto, puntuacion: usuario2[i],
-                motivo: `Usuario 2 lo valora en ${usuario2[i]}/5`
+            .map((app, i) => (usuario1[i] <= 2 && usuario2[i] >= 4) ? {
+                app, puntuacion: usuario2[i],
+                motivo: `Usuario 2 la valora en ${usuario2[i]}/5`
             } : null)
             .filter(Boolean);
 
-        html += `<div class="mt-4"><h5><i class="fas fa-user-plus text-success"></i> Recomendaciones para <strong>Usuario 1</strong></h5>`;
+        html += `<div class="mt-4"><h5><i class="fas fa-thumbs-up text-info"></i> Recomendaciones para <strong>Usuario 1</strong></h5>`;
         if (rec1.length === 0) {
-            html += `<div class="alert alert-light">No hay productos recomendables para Usuario 1.</div>`;
+            html += `<div class="alert alert-light">No hay apps recomendables para Usuario 1.</div>`;
         } else {
             html += `<div class="border rounded p-3 bg-white shadow-sm">`;
             rec1.forEach(r => {
                 html += `<div class="recomendacion-item">
-                            <strong>${r.producto}</strong> 
-                            <span class="badge bg-success float-end">${r.puntuacion}/5</span>
+                            <strong>${r.app}</strong> 
+                            <span class="badge bg-info float-end">${r.puntuacion}/5</span>
                             <br>
                             <small class="text-muted"><i class="fas fa-lightbulb"></i> ${r.motivo}</small>
                          </div>`;
@@ -321,21 +334,21 @@
 
         // Recomendaciones para Usuario 2
         const rec2 = productos
-            .map((producto, i) => (usuario2[i] <= 2 && usuario1[i] >= 4) ? {
-                producto, puntuacion: usuario1[i],
-                motivo: `Usuario 1 lo valora en ${usuario1[i]}/5`
+            .map((app, i) => (usuario2[i] <= 2 && usuario1[i] >= 4) ? {
+                app, puntuacion: usuario1[i],
+                motivo: `Usuario 1 la valora en ${usuario1[i]}/5`
             } : null)
             .filter(Boolean);
 
-        html += `<div class="mt-4"><h5><i class="fas fa-user-plus text-primary"></i> Recomendaciones para <strong>Usuario 2</strong></h5>`;
+        html += `<div class="mt-4"><h5><i class="fas fa-thumbs-up text-info"></i> Recomendaciones para <strong>Usuario 2</strong></h5>`;
         if (rec2.length === 0) {
-            html += `<div class="alert alert-light">No hay productos recomendables para Usuario 2.</div>`;
+            html += `<div class="alert alert-light">No hay apps recomendables para Usuario 2.</div>`;
         } else {
             html += `<div class="border rounded p-3 bg-white shadow-sm">`;
             rec2.forEach(r => {
                 html += `<div class="recomendacion-item">
-                            <strong>${r.producto}</strong> 
-                            <span class="badge bg-primary float-end">${r.puntuacion}/5</span>
+                            <strong>${r.app}</strong> 
+                            <span class="badge bg-info float-end">${r.puntuacion}/5</span>
                             <br>
                             <small class="text-muted"><i class="fas fa-lightbulb"></i> ${r.motivo}</small>
                          </div>`;
