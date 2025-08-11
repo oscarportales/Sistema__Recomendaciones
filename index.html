@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Sistema de Recomendaciones Inteligente</title>
+    <title>🛒 Sistema de Recomendaciones Inteligente</title>
 
     <!-- Google Fonts: Poppins y Open Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -143,6 +143,28 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Mejora de la tabla */
+        .table-bordered td {
+            background-color: #f8f9fa; /* Fondo claro para mejor visibilidad */
+            color: #333; /* Letras oscuras */
+            border: 1px solid #dee2e6; /* Borde suave */
+        }
+
+        .table-bordered input.form-control {
+            background-color: transparent; /* Transparente para mantener consistencia */
+            border: none; /* Sin borde adicional */
+            box-shadow: none; /* Sin sombra */
+        }
+
+        /* Enunciado del proyecto */
+        .project-enunciation {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -153,13 +175,25 @@
             <div class="main-container fade-in">
                 <div class="text-center mb-4">
                     <i class="fas fa-magic fa-2x text-success mb-2"></i>
-                    <h2>Sistema de Recomendaciones</h2>
+                    <h2>🛒 Sistema de Recomendaciones Inteligente</h2>
                     <p class="text-muted">Basado en similitud de coseno — Recomendaciones para ambos usuarios</p>
+                </div>
+
+                <!-- Enunciado del proyecto -->
+                <div class="project-enunciation">
+                    <h5><i class="fas fa-book-open"></i> Enunciado del Proyecto</h5>
+                    <p><strong>Objetivo:</strong> Aplicar el concepto de producto escalar para medir similitud entre usuarios o productos.</p>
+                    <ol>
+                        <li>Definir vectores de preferencias (por ejemplo: usuario-producto).</li>
+                        <li>Calcular la similitud de coseno entre dos vectores.</li>
+                        <li>Mostrar el resultado como porcentaje de similitud.</li>
+                        <li>Simular un sistema de recomendaciones.</li>
+                    </ol>
                 </div>
 
                 <!-- Guía de puntuaciones -->
                 <div class="mb-4">
-                    <h5><i class="fas fa-info-circle"></i> Guía de Puntuaciones</h5>
+                    <h5><i class="fas fa-info-circle"></i> 📊 Guía de Puntuaciones</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered text-center">
                             <thead class="table-light">
@@ -181,7 +215,7 @@
 
                 <!-- Tabla de productos -->
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle">
+                    <table class="table table-bordered align-middle">
                         <thead class="table-dark">
                             <tr>
                                 <th>Producto</th>
