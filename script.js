@@ -9,7 +9,7 @@ const productos = [
     "Telegram",
     "Spotify",
     "Uber",
-    "Google Maps",
+    "Facebook",
     "Discord",
     "X (Twitter)",
     "YouTube"
